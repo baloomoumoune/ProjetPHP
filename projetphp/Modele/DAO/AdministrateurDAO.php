@@ -26,20 +26,20 @@ class AdministrateurDAO {
     }
 
     public function createAdministrateur($nom_Admin, $pre_Admin, $mdp_Admin) {
-        $sql = "INSERT INTO administrateur (nom_Admin, pre_Admin, mdp_Admin) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO Administrateur (nom_Admin, pre_Admin, mdp_Admin) VALUES (?, ?, ?, ?)";
         $stmt = $bdd->prepare($sql);
         $stmt->execute([$nom_Admin, $pre_Admin, $mdp_Admin]);
     }
 
 
     public function updateAdministrateur($id_Admin, $nom_Admin, $pre_Admin, $mdp_Admin) {
-        $sql = "UPDATE administrateur SET nom_Admin=?, pre_Admin=?, mdp_Admin=? WHERE id_Admin=?";
+        $sql = "UPDATE Administrateur SET nom_Admin=?, pre_Admin=?, mdp_Admin=? WHERE id_Admin=?";
         $stmt = $bdd->prepare($sql);
         $stmt->execute([$nom_Admin, $pre_Admin, $mdp_Admin, $id_Admin]);
     }
 
     public function deleteAdministrateur($id_Admin) {
-        $sql = "DELETE FROM administrateur WHERE id_Admin=?";
+        $sql = "DELETE FROM Administrateur WHERE id_Admin=?";
         $stmt = $bdd->prepare($sql);
         $stmt->execute([$id_Admin]);
     }

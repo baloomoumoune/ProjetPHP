@@ -5,5 +5,5 @@ $titre = 'accueil';
 $mesFilms = $OeuvreDAO->getAllFilm();
 $mesSeries = $OeuvreDAO->getAllSerie();
 $mesAnimes = $OeuvreDAO->getAllAnime();
-include('../vue/navBarre.php');
+include_once('../vue/navBarre.php');
 include('../vue/vueListeOeuvre.php');
