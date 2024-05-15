@@ -1,0 +1,82 @@
+body{overflow-x: hidden;}
+
+.container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #fff;
+    overflow-x: hidden; /* Masque la barre de défilement par défaut */
+    white-space: nowrap; /* Empêche le passage à la ligne des éléments */
+    position: relative; /* Ajout pour positionner la flèche par rapport à ce conteneur */
+}
+
+.films-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap; /* Empêche le passage à la ligne */
+    justify-content: flex-start; /* Début de la ligne par défaut */
+    transition: transform 0.3s ease; /* Animation de transition pour le défilement */
+    width: max-content; /* Ajuste la largeur en fonction du contenu */
+}
+
+.film-link {
+    width: 200px;
+    height: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    text-align: center;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.film-image {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    
+}
+
+.film-title {
+    margin-top: 20px; 
+    color: #ffffff; 
+    font-size: 18px;  
+
+}
+
+.scroll-arrow#scrollLeft {
+    position: fixed; /* Ajustement pour positionner la flèche à gauche */
+    top: 27%; /* Ajuste la position verticale de la flèche */
+    left:10px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 24px;
+    z-index: 999;
+    color:white;
+}
+
+.scroll-arrow#scrollRight {
+    position: fixed; /* Positionnement fixe sur la fenêtre */
+    top: 27%; /* Ajuste la position verticale de la flèche */
+    right: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 24px;
+    z-index: 999;
+    color:white;
+}
+h3 {
+margin-top: 80px; /* pour que le titre soit plus haut ou plus bas */
+}
