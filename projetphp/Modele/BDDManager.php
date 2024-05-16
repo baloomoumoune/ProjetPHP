@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 function initialiseConnexionBDD() {
     $bdd = null;
@@ -8,6 +7,7 @@ function initialiseConnexionBDD() {
             'root',
             ''
         );
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch(Exception $e) {
         die('Erreur connexion BDD : '.$e->POSTMessage());
     }

@@ -1,28 +1,29 @@
 <?php
-require_once ('../Modele/DAO/GenreDAO.php');
-$GenreDAO = new \DAO\genreDAO();
-$mesgenres = $GenreDAO->getAllGen();?>
+require_once ('../Modele/BO/Acteur.php');
+require_once ('../Modele/DAO/ActeurDAO.php');
+require_once ('../Modele/DAO/RealisateurDAO.php');
+require_once ('../Modele/DAO/OeuvreDAO.php');
+require_once ("../Modele/BDDManager.php");
+$bdd=initialiseConnexionBDD();
+$ActeurDAO = new \DAO\ActeurDAO($bdd);
+$RealisateurDAO = new \DAO\RealisateurDAO();
+$OeuvreDAO = new \DAO\oeuvreDAO();
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>test</title>
-    <link rel="stylesheet" href="view/test.css">
-</head>
-<body>
-<h1>test</h1>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Nom</th>
-    </tr>
-    <?php foreach ($mesgenres as $genre): ?>
-        <tr>
-            <td><?php echo $genre['id_Gen']; ?></td>
-            <td><?php echo $genre['lib_gen']; ?></td>
-        </tr>
-    <?php endforeach; ?>
-</table>
 
-</body>
-</html>
+//-----------------find les Réalisateurs----------------
+//$monreal = $RealisateurDAO->findReal(2);
+//var_dump($monreal);
+
+
+//-------------oeuvres----------------
+//$monoeuvre = $OeuvreDAO->findOeuvre(1);
+//var_dump($monoeuvre);
+
+//------------Acteurs-------------
+$testgetall = $ActeurDAO->getAllAct();
+var_dump($testgetall);
+$testfind = $ActeurDAO->findAct(2);
+var_dump($testfind);
+
+
+

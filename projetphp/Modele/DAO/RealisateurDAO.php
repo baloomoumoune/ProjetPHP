@@ -26,19 +26,19 @@ class RealisateurDAO {
     }
 
     public function createRealisateur($nom_Real, $pre_Real, $nat_Real, $rec_Real) {
-        $sql = "INSERT INTO realisateur (nom_Real, pre_Real, nat_Real, rec_Real) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO Realisateur (nom_Real, pre_Real, nat_Real, rec_Real) VALUES (?, ?, ?, ?)";
         $stmt = $bdd->prepare($sql);
         $stmt->execute([$nom_Real, $pre_Real, $nat_Real, $rec_Real]);
     }
 
     public function updateRealisateur($id_Real, $nom_Real, $pre_Real, $nat_Real, $rec_Real) {
-        $sql = "UPDATE realisateur SET nom_Real=?, pre_Real=?, nat_Real=?, rec_Real=? WHERE id_Real=?";
+        $sql = "UPDATE Realisateur SET nom_Real=?, pre_Real=?, nat_Real=?, rec_Real=? WHERE id_Real=?";
         $stmt = $bdd->prepare($sql);
         $stmt->execute([$nom_Real, $pre_Real, $nat_Real, $rec_Real, $id_Real]);
     }
 
     public function deleteRealisateur($id_Real) {
-        $sql = "DELETE FROM realisateur WHERE id_Real=?";
+        $sql = "DELETE FROM Realisateur WHERE id_Real=?";
         $stmt = $bdd->prepare($sql);
         $stmt->execute([$id_Real]);
     }

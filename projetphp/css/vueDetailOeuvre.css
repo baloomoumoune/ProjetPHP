@@ -8,6 +8,7 @@
     align-items: center; /* Centrer verticalement le contenu */
     padding: 20px; /* Espacement intérieur */
     box-sizing: border-box; /* Inclut les bordures et les rembourrages dans la largeur et la hauteur */
+    margin-top:18svh;
 }
 
 .image {

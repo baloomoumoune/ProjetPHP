@@ -1,43 +1,66 @@
-
-.container {
-    background-color: #000;
-    padding: 20px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #202020;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.login-box {
-    width: 300px;
-    margin: auto;
+h1 {
     text-align: center;
-}
-
-.login-box h2 {
-    color: #fff;
-}
-
-.textbox {
     margin-bottom: 20px;
+    color: white;
 }
 
-.textbox input[type="text"],
-.textbox input[type="password"] {
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    margin-right: 50px; /* Centrer le formulaire horizontalement */
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
-    border: none;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.btn {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #FF7800;
+input[type="submit"] {
+    background-color: #007bff;
     color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-    background-color: #45a049;
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center; /* Centrer le message d'erreur */
+}
+.container {
+    text-align: center; /* Centrer le contenu horizontalement */
+    margin: 0 auto; /* Centrer le conteneur horizontalement */
+    width: 300px; /* Largeur du conteneur */
 }
