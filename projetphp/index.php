@@ -1,3 +1,3 @@
 <?php
-header('Location:controleur/ListeOeuvre.php');
-//header('Location:tests/test.php');
+//header('Location:controleur/ListeOeuvre.php');
+header('Location:tests/test.php');

@@ -4,7 +4,7 @@ session_start();
 require_once ('../Modele/BDDManager.php');
 $bdd = initialiseConnexionBDD();
 
-
+//$_SESSION['login'] = '';
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $nom = $_POST["nom"];
     $password = $_POST["password"];

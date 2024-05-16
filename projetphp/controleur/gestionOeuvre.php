@@ -17,5 +17,5 @@ if(isset($_SESSION['login'])&&$_SESSION['login']!='' ){
 else{
     include('../vue/navBarreSC.php');
 }
-include('../vue/vueListeOeuvre.php');
+include('../vue/gestionOeuvre.php');
 include('../vue/basDePage.php');

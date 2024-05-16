@@ -1,43 +1,93 @@
 <?php
 
 namespace DAO;
-require_once ('../Modele/BDDManager.php');
+use Bo\Genre;
 class GenreDAO
 {
-    public function __construct()
+    public function __construct(\PDO $bdd)
     {
-        $this->bdd = initialiseConnexionBDD();
+        $this->bdd = $bdd;
     }
 
-    public function getAllGen() {
+    public function getAllGenre() {
         $query = "SELECT * FROM Genre";
         $stmt = $this->bdd->query($query);
-        return $stmt->fetchAll();
+        if ($stmt) {
+            $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+            foreach($stmt as $row ) {
+                $resultSet[] = new Genre($row['id_Gen'],$row['lib_Gen']);
+            }
+        }
+        return $resultSet;
     }
 
-    public function findGen($id) {
+    public function findGenre(int $id) {
+        $resultSet = NULL;
         $query = "SELECT * FROM Genre WHERE id_Gen = :id";
         $stmt = $this->bdd->prepare($query);
-        $stmt->execute(array(':id' => $id));
-        return $stmt->fetch();
+        $res = $stmt->execute(array(':id' => $id));
+        if ($res !== FALSE) {
+            $row = ($tmp = $stmt->fetch(\PDO::FETCH_ASSOC)) ? $tmp : null;
+            if(!is_null($row)) {
+                $resultSet[] = new Genre($row['id_Gen'],$row['lib_Gen']);
+            }
+        }
+        return $resultSet;
     }
 
-    public function createGen($lib_Gen) {
-        $query = "INSERT INTO Genre (lib_Gen) VALUES (:libGen)";
-        $stmt = $this->bdd->prepare($query);
-         $stmt->execute(array(':libGen'=>$lib_Gen));
-        var_dump($stmt);
+    public function createGenre(Genre $entity) {
+        if ($entity->getIdGen()!= $this->findGenre($entity->getIdGen())){
+            $query = "INSERT INTO Genre (lib_Gen) VALUES (:libGen)";
+            $stmt = $this->bdd->prepare($query);
+            $res = $stmt->execute(
+                [
+                    ':libGen' => $entity->getLibGen()
+                ]
+            );
+            if ($res !== FALSE) {
+                $entity->setIdGen($this->bdd->lastInsertId());
+                $resultSet = $entity;
+            }
+        }
+        return $resultSet;
     }
 
-    public function updateGen($id_Gen, $lib_Gen) {
-        $query = "UPDATE Genre SET lib_Gen=:libgen WHERE id_Gen=:idgen";
-        $stmt = $this->bdd->prepare($query);
-        return $stmt->execute(array(':libgen' => $lib_Gen,':idgen' => $id_Gen));
+    public function updateGenre(Genre $entity) {
+        $resultSet = false;
+        if ($entity->getIdGen() !== null && $this->findGenre($entity->getIdGen()) !== null) {
+            $query = "UPDATE Genre SET lib_Gen = :libGen WHERE id_Gen = :idGen";
+
+            $reqPrep = $this->bdd->prepare($query);
+            $res = $reqPrep->execute(
+                [
+                    ':libGen' => $entity->getLibGen(),
+                    ':idGen'=> $entity->getIdGen()
+                ]);
+
+            if ($res !== false) {
+                $resultSet = $entity;
+            }
+        }
+        return $resultSet;
     }
 
-    public function deleteGen($id_Gen) {
-        $query = "DELETE FROM Genre WHERE id_Gen=:idgen";
-        $stmt = $this->bdd->prepare($query);
-        return $stmt->execute(array(':idgen' => $id_Gen));
+    public function deleteGenre(Genre $entity) {
+        $resultSet = FALSE;
+
+        if ($entity->getIdGen()!=null && $this->findGenre($entity->getIdGen())!=null){
+            $query = "DELETE FROM Genre ".
+                "WHERE id_Gen = :idGen";
+
+            $reqPrep = $this->bdd->prepare($query);
+            $res = $reqPrep->execute(
+                [
+                    ':idGen'=>$entity->getIdGen()
+                ]);
+
+            if ($res !== FALSE) {
+                $resultSet = TRUE;
+            }
+        }
+        return $resultSet;
     }
 }

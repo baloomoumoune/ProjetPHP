@@ -7,7 +7,9 @@
     <title>Connexion</title>
 </head>
 <body>
-
+    <?php   include('../vue/navBarreSC.php');
+            include('../vue/basDePage.php');
+    ?>
 <div class="container">
     <h1>Connexion</h1>
 

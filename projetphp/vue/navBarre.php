@@ -15,7 +15,7 @@
   <a href="#" class="nav-item" data-active-color="green" data-target="Films">Films</a>
   <a href="#" class="nav-item" data-active-color="blue" data-target="Séries">Séries</a>
   <a href="#" class="nav-item" data-active-color="red" data-target="Manga">Manga</a>
-  <a href="#" class="nav-item" data-active-color="rebeccapurple" data-target="Gérer oeuvres">Gérer oeuvres</a>
+  <a href="../controleur/gestionOeuvre.php" class="nav-item" data-active-color="rebeccapurple" data-target="Gérer oeuvres">Gérer oeuvres</a>
   <span class="nav-indicator"></span>
-  <a href="#?connect=unset" class="nav-item" data-active-color="black" data-target="Se connecter" style="margin-left: auto;">Se déconnecter</a>
+  <a href="ListeOeuvre.php?connect=unset" class="nav-item" data-active-color="black" data-target="Se connecter" style="margin-left: auto;">Se déconnecter</a>
 </nav>
