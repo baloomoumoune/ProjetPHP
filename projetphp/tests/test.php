@@ -4,6 +4,7 @@ require_once ('../Modele/BO/Administrateur.php');
 require_once ('../Modele/BO/Classification.php');
 require_once ('../Modele/BO/Genre.php');
 require_once ('../Modele/BO/Realisateur.php');
+require_once ('../Modele/BO/Oeuvre.php');
 
 
 require_once ('../Modele/DAO/ActeurDAO.php');
@@ -22,7 +23,7 @@ $ActeurDAO = new \DAO\ActeurDAO($bdd);
 $RealisateurDAO = new \DAO\RealisateurDAO($bdd);
 $AdministrateurDAO = new \DAO\AdministrateurDAO($bdd);
 $ClassificationDAO = new \DAO\ClassificationDAO($bdd);
-$OeuvreDAO = new \DAO\oeuvreDAO();
+$OeuvreDAO = new \DAO\oeuvreDAO($bdd);
 $GenreDAO = new \DAO\genreDAO($bdd);
 
 $Acteur1 = new \BO\Acteur(4,'testNom','testPre','polonaise',new \DateTime("1990-05-27"));
@@ -40,10 +41,16 @@ $Realisateur1 = new \BO\Realisateur(4,'testUpdate','test','polonais',true);
 //-------------oeuvres----------------
 //$monoeuvre = $OeuvreDAO->findOeuvre(1);
 //var_dump($monoeuvre);
+//$mesOeuvres = $OeuvreDAO->getAllOeuvre();
+//var_dump($mesOeuvres);
+//$monOeuvre = $OeuvreDAO->findOeuvre(3);
+//var_dump($monOeuvre);
+//$mesFilms = $OeuvreDAO->getAllFilm();
+//var_dump($mesFilms);
 
 
 //------------Acteurs-------------
-//$testgetall = $ActeurDAO->getAllAct();
+$testgetall = $ActeurDAO->getAllAct();
 //var_dump($testgetall);
 //$testfind = $ActeurDAO->findAct(2);
 //var_dump($testfind);
@@ -53,9 +60,46 @@ $Realisateur1 = new \BO\Realisateur(4,'testUpdate','test','polonais',true);
 //var_dump($testUpdateActeur);
 //$testDeleteActeur = $ActeurDAO->deleteAct($Acteur2);
 //var_dump($testDeleteActeur);
+//$testActeurbyOeuvre = $ActeurDAO->getAllActByOeuvre(1);
+//var_dump($testActeurbyOeuvre);
+//$testActeurP = $ActeurDAO->getAllActPByOeuvre(2);
+//var_dump($testActeurP);
+
+?>
+    <!--<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Liste des Acteurs</title>
+    </head>
+    <body>
+    <h1>Liste des Acteurs</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Nationalité</th>
+            <th>Date de Naissance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($testgetall as $acteur): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($acteur->getIdAct()); ?></td>
+                <td><?php echo htmlspecialchars($acteur->getNomAct()); ?></td>
+                <td><?php echo htmlspecialchars($acteur->getPrenomAct()); ?></td>
+                <td><?php echo htmlspecialchars($acteur->getNationaliteAct()); ?></td>
+                <td><?php echo htmlspecialchars($acteur->getDateNaissanceAct()->format('Y-m-d')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    </body>
+    </html>-->
 
 
-
+<?php
 //------------admins------------
 //$testgetAllAdmin = $AdministrateurDAO->getAllAdmin();
 //var_dump($testgetAllAdmin);
@@ -67,6 +111,8 @@ $Realisateur1 = new \BO\Realisateur(4,'testUpdate','test','polonais',true);
 //var_dump($testupdateAdmin);
 //$testdeleteadmin = $AdministrateurDAO->deleteAdmin($Admin1);
 //var_dump($testdeleteadmin);
+//$testVerif = $AdministrateurDAO->verifAdmin('greffet',1234);
+//var_dump($testVerif);
 
 
 
@@ -108,3 +154,4 @@ $Realisateur1 = new \BO\Realisateur(4,'testUpdate','test','polonais',true);
 //var_dump($testUpdtaeReal);
 //$testdeleteReal = $RealisateurDAO->deleteReal($Realisateur1);
 //var_dump($testdeleteReal);
+?>

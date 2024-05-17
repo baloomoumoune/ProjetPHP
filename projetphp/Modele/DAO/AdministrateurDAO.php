@@ -100,5 +100,20 @@ class AdministrateurDAO {
         }
         return $resultSet;
     }
+
+    public function verifAdmin($nom, $password) {
+        $req = $this->bdd->prepare("SELECT * FROM Administrateur WHERE nom_Admin = :nom AND mdp_Admin = :password");
+        $req->bindParam(':nom', $nom);
+        $req->bindParam(':password', $password);
+        $req->execute();
+        $row = $req->fetch();
+
+        if ($row) {
+            $resultSet = new Administrateur($row['id_Admin'],$row['nom_Admin'],$row['pre_Admin'],$row['mdp_Admin']);
+        }else {
+            $resultSet = null;
+        }
+        return $resultSet;
+    }
 }
 

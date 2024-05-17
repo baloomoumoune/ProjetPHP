@@ -1,11 +1,12 @@
 <?php
 session_start();
 require_once('../Modele/DAO/OeuvreDAO.php');
+$bdd=initialiseConnexionBDD();
 
 if(isset($_GET['connect']) && $_GET['connect'] = 'unset') {
     unset($_SESSION['login']);
 }
-$OeuvreDAO = new \DAO\OeuvreDAO();
+$OeuvreDAO = new \DAO\OeuvreDAO($this->bdd);
 $titre = 'accueil';
 $mesFilms = $OeuvreDAO->getAllFilm();
 $mesSeries = $OeuvreDAO->getAllSerie();

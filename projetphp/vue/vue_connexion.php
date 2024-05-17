@@ -13,9 +13,9 @@
 <div class="container">
     <h1>Connexion</h1>
 
-    <?php if(isset($error_message)): ?>
+    <?php if(isset($error_message)){ ?>
         <p class='error-message'><?php echo $error_message; ?></p>
-    <?php endif; ?>
+    <?php } ?>
 
     <form method="POST" action="">
         <label for="Nom">Identifiant</label>

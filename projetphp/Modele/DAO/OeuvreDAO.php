@@ -2,43 +2,125 @@
 
 namespace DAO;
 
-require_once('../Modele/BDDManager.php');
+require_once ('ActeurDAO.php');
+require_once ('GenreDAO.php');
+require_once ('RealisateurDAO.php');
+use Bo\Oeuvre;
+
 
 class OeuvreDAO {
     private $bdd;
 
-    public function __construct()
+    public function __construct(\PDO $bdd)
     {
-        $this->bdd = initialiseConnexionBDD();
+        $this->bdd = $bdd;
     }
 
-    public function getAllOeuvres() {
-        $query = "SELECT * FROM Oeuvre";
-        $stmt = $this->bdd->query($query);
-        return $stmt->fetchAll();
+    public function getAllOeuvre() : ?array
+    {
+        $resultSet = NULL;
+        $query = 'SELECT * FROM Oeuvre';
+        $rqtResult = $this->bdd->query($query);
+        if ($rqtResult) {
+            $rqtResult->setFetchMode(\PDO::FETCH_ASSOC);
+            foreach($rqtResult as $row ) {
+                $dao = new ClassificationDAO($this->bdd);
+                $laCla = $dao->findCla($row['id_Cla']);
+                $resultSet[] = new Oeuvre($row['id_Oeuvre'],$row['tit_ori_Oeuvre'],$row['tit_fr_Oeuvre'],$row['anne_sort_Oeuvre'],$row['res_Oeuvre'],$row['nb_ep_Oeuvre'],$row['img_Oeuvre'],$laCla);
+	    }
+        }
+        return $resultSet;
     }
 
-    public function findOeuvre($id) {
-        $query = "SELECT * FROM Oeuvre WHERE id_Oeuvre = :id";
-        $stmt = $this->bdd->prepare($query);
-        $stmt->execute(array(':id' => $id));
-        return $stmt->fetch();
+    public function findOeuvre(int $id) : ?Oeuvre
+    {
+        $resultSet = NULL;
+        $query = 'SELECT * FROM Oeuvre WHERE id_Oeuvre=:idOeuvre;';
+        $reqPrep = $this->bdd->prepare($query);
+        $res = $reqPrep->execute([':idOeuvre' => $id]);
+        if ($res !== FALSE) {
+            $row = $reqPrep->fetch(\PDO::FETCH_ASSOC);
+            if(!is_null($row)) {
+                $daoReal = new \DAO\RealisateurDAO($this->bdd);
+                $daoGen = new \DAO\GenreDAO($this->bdd);
+                $daoAct = new \DAO\ActeurDAO($this->bdd);
+                $dao = new \DAO\ClassificationDAO($this->bdd);
+                $laCla = $dao->findCla($row['id_Cla']);
+                $resultSet = new Oeuvre($row['id_Oeuvre'],$row['tit_ori_Oeuvre'],$row['tit_fr_Oeuvre'],$row['anne_sort_Oeuvre'],$row['res_Oeuvre'],$row['nb_ep_Oeuvre'],$row['img_Oeuvre'],$laCla);
+
+                $acteurs = $daoAct->getAllActByOeuvre($row['id_Oeuvre']);
+                if ($acteurs === null) {
+                    $acteurs = [];
+                }
+                $resultSet->setActeurs($acteurs);
+
+
+                $acteursP = $daoAct->getAllActPByOeuvre($row['id_Oeuvre']);
+                if ($acteursP === null) {
+                    $acteursP = [];
+                }
+                $resultSet->setActeurP($acteursP);
+
+                $genre = $daoGen->getAllGenByOeuvre($row['id_Oeuvre']);
+                if ($genre === null) {
+                    $genre = [];
+                }
+                $resultSet->setMesgenres($genre);
+
+                $real = $daoReal->getAllRealByOeuvre($row['id_Oeuvre']);
+                if ($real === null) {
+                    $real = [];
+                }
+                $resultSet->setMesrealisateurs($real);
+            }
+        }
+        return $resultSet;
     }
 
-    public function getAllFilm() {
-        $query = "SELECT * FROM Oeuvre WHERE id_Cla = 1";
-        $stmt = $this->bdd->query($query);
-        return $stmt->fetchAll();
+    public function getAllFilm() : ?array
+    {
+        $resultSet = NULL;
+        $query = 'SELECT * FROM Oeuvre WHERE id_Cla = 1';
+        $rqtResult = $this->bdd->query($query);
+        if ($rqtResult) {
+            $rqtResult->setFetchMode(\PDO::FETCH_ASSOC);
+            foreach($rqtResult as $row ) {
+                $dao = new ClassificationDAO($this->bdd);
+                $laCla = $dao->findCla($row['id_Cla']);
+                $resultSet[] = new Oeuvre($row['id_Oeuvre'],$row['tit_ori_Oeuvre'],$row['tit_fr_Oeuvre'],$row['anne_sort_Oeuvre'],$row['res_Oeuvre'],$row['nb_ep_Oeuvre'],$row['img_Oeuvre'],$laCla);
+            }
+        }
+        return $resultSet;
     }
-    public function getAllSerie() {
-        $query = "SELECT * FROM Oeuvre WHERE id_Cla = 2";
-        $stmt = $this->bdd->query($query);
-        return $stmt->fetchAll();
+    public function getAllSerie() : ?array
+    {
+        $resultSet = NULL;
+        $query = 'SELECT * FROM Oeuvre WHERE id_Cla = 2';
+        $rqtResult = $this->bdd->query($query);
+        if ($rqtResult) {
+            $rqtResult->setFetchMode(\PDO::FETCH_ASSOC);
+            foreach($rqtResult as $row ) {
+                $dao = new ClassificationDAO($this->bdd);
+                $laCla = $dao->findCla($row['id_Cla']);
+                $resultSet[] = new Oeuvre($row['id_Oeuvre'],$row['tit_ori_Oeuvre'],$row['tit_fr_Oeuvre'],$row['anne_sort_Oeuvre'],$row['res_Oeuvre'],$row['nb_ep_Oeuvre'],$row['img_Oeuvre'],$laCla);
+            }
+        }
+        return $resultSet;
     }
-    public function getAllAnime() {
-        $query = "SELECT * FROM Oeuvre WHERE id_Cla = 3";
-        $stmt = $this->bdd->query($query);
-        return $stmt->fetchAll();
+    public function getAllAnime() : ?array
+    {
+        $resultSet = NULL;
+        $query = 'SELECT * FROM Oeuvre WHERE id_Cla = 3';
+        $rqtResult = $this->bdd->query($query);
+        if ($rqtResult) {
+            $rqtResult->setFetchMode(\PDO::FETCH_ASSOC);
+            foreach($rqtResult as $row ) {
+                $dao = new ClassificationDAO($this->bdd);
+                $laCla = $dao->findCla($row['id_Cla']);
+                $resultSet[] = new Oeuvre($row['id_Oeuvre'],$row['tit_ori_Oeuvre'],$row['tit_fr_Oeuvre'],$row['anne_sort_Oeuvre'],$row['res_Oeuvre'],$row['nb_ep_Oeuvre'],$row['img_Oeuvre'],$laCla);
+            }
+        }
+        return $resultSet;
     }
 
     public function createOeuvre($tit_ori_Oeuvre, $tit_fr_Oeuvre, $anne_sort_Oeuvre, $res_Oeuvre, $nb_ep_Oeuvre, $img_Oeuvre, $id_Cla) {

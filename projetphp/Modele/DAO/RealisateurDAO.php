@@ -31,7 +31,7 @@ class RealisateurDAO {
         if ($res !== FALSE) {
             $row = ($tmp = $stmt->fetch(\PDO::FETCH_ASSOC)) ? $tmp : null;
             if(!is_null($row)) {
-                $resultSet[] = new Realisateur($row['id_Real'],$row['nom_Real'],$row['pre_Real'],$row['nat_Real'],$row['rec_Real']);
+                $resultSet = new Realisateur($row['id_Real'],$row['nom_Real'],$row['pre_Real'],$row['nat_Real'],$row['rec_Real']);
             }
         }
         return $resultSet;
@@ -94,6 +94,22 @@ class RealisateurDAO {
 
             if ($res !== FALSE) {
                 $resultSet = TRUE;
+            }
+        }
+        return $resultSet;
+    }
+
+    public function getAllRealByOeuvre(int $id){
+        $resultSet = NULL;
+        $query = "SELECT id_Real FROM Realiser WHERE id_Oeuvre = :id";
+        $stmt = $this->bdd->prepare($query);
+        $stmt->execute(array(':id' => $id));
+        if ($stmt !== FALSE) {
+            $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+            foreach($stmt as $row ) {
+                $real = $this->findReal($row['id_Real']);
+                $resultSet[] = $real;
+
             }
         }
         return $resultSet;

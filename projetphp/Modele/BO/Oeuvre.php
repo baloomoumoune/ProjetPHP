@@ -10,6 +10,10 @@ class Oeuvre {
     private string $resume;
     private int $nombreEpisodes;
     private string $image;
+    private array $acteurs;
+    private array $acteurP;
+    private array $mesgenres;
+    private array $mesrealisateurs;
     private Classification $classification;
 
     public function __construct(int $idOeuvre, string $titreOriginal, string $titreFrancais, int $anneeSortie, string $resume, int $nombreEpisodes, string $image, Classification $classification)
@@ -22,6 +26,10 @@ class Oeuvre {
         $this->nombreEpisodes = $nombreEpisodes;
         $this->image = $image;
         $this->classification = $classification;
+        $this->acteurs = [null];
+        $this->acteurP = [null];
+        $this->mesgenres = [null];
+        $this->mesrealisateurs = [null];
     }
 
     public function getIdOeuvre(): int
@@ -103,4 +111,47 @@ class Oeuvre {
     {
         $this->classification = $classification;
     }
+
+    public function getActeurs(): array
+    {
+        return $this->acteurs;
+    }
+
+    public function setActeurs(array $acteurs): void
+    {
+        $this->acteurs = $acteurs;
+    }
+
+    public function getActeurP(): array
+    {
+        return $this->acteurP;
+    }
+
+    public function setActeurP(array $acteurP): void
+    {
+        $this->acteurP = $acteurP;
+    }
+
+    public function getMesgenres(): array
+    {
+        return $this->mesgenres;
+    }
+
+    public function setMesgenres(array $mesgenres): void
+    {
+        $this->mesgenres = $mesgenres;
+    }
+
+    public function getMesrealisateurs(): array
+    {
+        return $this->mesrealisateurs;
+    }
+
+    public function setMesrealisateurs(array $mesrealisateurs): void
+    {
+        $this->mesrealisateurs = $mesrealisateurs;
+    }
+
+
+
 }

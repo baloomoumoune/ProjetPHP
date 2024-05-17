@@ -1,6 +1,7 @@
 <?php
 
 namespace DAO;
+
 use Bo\Genre;
 class GenreDAO
 {
@@ -29,7 +30,7 @@ class GenreDAO
         if ($res !== FALSE) {
             $row = ($tmp = $stmt->fetch(\PDO::FETCH_ASSOC)) ? $tmp : null;
             if(!is_null($row)) {
-                $resultSet[] = new Genre($row['id_Gen'],$row['lib_Gen']);
+                $resultSet = new Genre($row['id_Gen'],$row['lib_Gen']);
             }
         }
         return $resultSet;
@@ -86,6 +87,22 @@ class GenreDAO
 
             if ($res !== FALSE) {
                 $resultSet = TRUE;
+            }
+        }
+        return $resultSet;
+    }
+
+    public function getAllGenByOeuvre(int $id){
+        $resultSet = [];
+        $query = "SELECT id_Gen FROM Appartenir WHERE id_Oeuvre = :id ";
+        $stmt = $this->bdd->prepare($query);
+        $stmt->execute(array(':id' => $id));
+        if ($stmt !== FALSE) {
+            $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+            foreach($stmt as $row ) {
+                $gen = $this->findGenre($row['id_Gen']);
+                $resultSet[] = $gen;
+
             }
         }
         return $resultSet;

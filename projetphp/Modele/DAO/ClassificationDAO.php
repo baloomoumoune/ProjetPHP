@@ -28,7 +28,7 @@ class ClassificationDAO {
         if ($res !== FALSE) {
             $row = ($tmp = $stmt->fetch(\PDO::FETCH_ASSOC)) ? $tmp : null;
             if(!is_null($row)) {
-                $resultSet[] = new Classification($row['id_Cla'],$row['lib_Cla']);
+                $resultSet = new Classification($row['id_Cla'],$row['lib_Cla']);
             }
         }
         return $resultSet;

@@ -17,7 +17,6 @@
             <p><strong>Date de Sortie :    <?php echo $monoeuvre['anne_sort_Oeuvre'] ?> </strong></p>
             <p><strong>Nombre d'épisode :    <?php echo $monoeuvre['nb_ep_Oeuvre'] ?> </strong></p>
             <p><strong>Résumé :    <?php echo $monoeuvre['res_Oeuvre'] ?> </p>
-            <!--<p><strong>Réalisateur :    <?php /*echo $mesRealNoms['pre_Real'] */?> <?php /* echo $mesRealNoms['nom_Real'] */?></p>-->
             <?php } else {
                 echo "Aucune oeuvre trouvée pour cet identifiant.";
             }?>
