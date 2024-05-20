@@ -34,7 +34,7 @@ $GenreDAO = new \DAO\genreDAO($bdd);
 
 $titre = 'accueil';
 
-$mesAnimes = $OeuvreDAO->getAllAnime();
+$mesSeries = $OeuvreDAO->getAllSerie();
 if(isset($_SESSION['login'])&&$_SESSION['login']!='' ){
 
     include('../vue/navBarre.php');
@@ -42,5 +42,5 @@ if(isset($_SESSION['login'])&&$_SESSION['login']!='' ){
 else{
     include('../vue/navBarreSC.php');
 }
-include('../vue/gestionOeuvre.php');
+include('../vue/vueListeSeries.php');
 include('../vue/basDePage.php');

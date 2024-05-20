@@ -34,13 +34,13 @@ $GenreDAO = new \DAO\genreDAO($bdd);
 
 $titre = 'accueil';
 
-$mesAnimes = $OeuvreDAO->getAllAnime();
+$mesFilms = $OeuvreDAO->getAllFilm();
 if(isset($_SESSION['login'])&&$_SESSION['login']!='' ){
-
+    
     include('../vue/navBarre.php');
 }
 else{
     include('../vue/navBarreSC.php');
 }
-include('../vue/gestionOeuvre.php');
+include('../vue/vuelisteFilms.php');
 include('../vue/basDePage.php');

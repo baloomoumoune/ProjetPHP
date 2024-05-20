@@ -43,8 +43,8 @@ $Realisateur1 = new \BO\Realisateur(4,'testUpdate','test','polonais',true);
 //var_dump($monoeuvre);
 //$mesOeuvres = $OeuvreDAO->getAllOeuvre();
 //var_dump($mesOeuvres);
-//$monOeuvre = $OeuvreDAO->findOeuvre(3);
-//var_dump($monOeuvre);
+$monOeuvre = $OeuvreDAO->findOeuvre(1);
+var_dump($monOeuvre);
 //$mesFilms = $OeuvreDAO->getAllFilm();
 //var_dump($mesFilms);
 
@@ -86,11 +86,11 @@ $testgetall = $ActeurDAO->getAllAct();
         <tbody>
         <?php foreach ($testgetall as $acteur): ?>
             <tr>
-                <td><?php echo htmlspecialchars($acteur->getIdAct()); ?></td>
-                <td><?php echo htmlspecialchars($acteur->getNomAct()); ?></td>
-                <td><?php echo htmlspecialchars($acteur->getPrenomAct()); ?></td>
-                <td><?php echo htmlspecialchars($acteur->getNationaliteAct()); ?></td>
-                <td><?php echo htmlspecialchars($acteur->getDateNaissanceAct()->format('Y-m-d')); ?></td>
+                <td><?php echo $acteur->getIdAct(); ?></td>
+                <td><?php echo $acteur->getNomAct(); ?></td>
+                <td><?php echo $acteur->getPrenomAct(); ?></td>
+                <td><?php echo $acteur->getNationaliteAct(); ?></td>
+                <td><?php echo $acteur->getDateNaissanceAct()->format('Y-m-d'); ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

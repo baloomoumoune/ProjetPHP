@@ -12,14 +12,14 @@
             <div class="containerFilm film">
                 <?php foreach ($mesFilms as $oeuvre) { ?>
                     <div class="articleImage">
-                        <a href="Details.php?idOeuvre=<?php echo $oeuvre['id_Oeuvre'] ?>">
-                            <?php if (is_null($oeuvre['id_Oeuvre'])) { ?>
+                        <a href="Details.php?idOeuvre=<?php echo $oeuvre->getIdOeuvre() ?>">
+                            <?php if (is_null($oeuvre->getIdOeuvre())) { ?>
                                 <div class="placeholder">Non trouvé</div>
                             <?php } else { ?>
-                                <img class="film-image" src="../img/<?php echo $oeuvre['img_Oeuvre'] ?>.jpg" alt="<?php echo $oeuvre['img_Oeuvre'] ?>">
+                                <img class="film-image" src="../img/<?php echo $oeuvre->getImage() ?>.jpg" alt="<?php echo $oeuvre->getImage() ?>">
                             <?php } ?>
                         </a>
-                        <h4 class="titreOeuvre"><?php echo strlen($oeuvre['tit_ori_Oeuvre']) > 25 ? substr($oeuvre['tit_ori_Oeuvre'], 0, 25) . '...' : $oeuvre['tit_ori_Oeuvre']; ?></h4>
+                        <h4 class="titreOeuvre"><?php echo strlen($oeuvre->getTitreOriginal()) > 25 ? substr($oeuvre->getTitreOriginal(), 0, 25) . '...' : $oeuvre->getTitreOriginal(); ?></h4>
                     </div>
                 <?php } ?>
             </div>
@@ -36,14 +36,14 @@
             
                 <?php foreach ($mesSeries as $oeuvre) { ?>
                     <div class="articleImage">
-                        <a href="Details.php?idOeuvre=<?php echo $oeuvre['id_Oeuvre'] ?>">
-                            <?php if (is_null($oeuvre['id_Oeuvre'])) { ?>
+                        <a href="Details.php?idOeuvre=<?php echo $oeuvre->getIdOeuvre() ?>">
+                            <?php if (is_null($oeuvre->getIdOeuvre())) { ?>
                                 <div class="placeholder">Non trouvé</div>
                             <?php } else { ?>
-                                <img class="film-image" src="../img/<?php echo $oeuvre['img_Oeuvre'] ?>.jpg" alt="<?php echo $oeuvre['img_Oeuvre'] ?>">
+                                <img class="film-image" src="../img/<?php echo $oeuvre->getImage() ?>.jpg" alt="<?php echo $oeuvre->getImage() ?>">
                             <?php } ?>
                         </a>
-                        <h4 class="titreOeuvre"><?php echo strlen($oeuvre['tit_ori_Oeuvre']) > 25 ? substr($oeuvre['tit_ori_Oeuvre'], 0, 25) . '...' : $oeuvre['tit_ori_Oeuvre']; ?></h4>
+                        <h4 class="titreOeuvre"><?php echo strlen($oeuvre->getTitreOriginal()) > 25 ? substr($oeuvre->getTitreOriginal(), 0, 25) . '...' : $oeuvre->getTitreOriginal(); ?></h4>
                     </div>
                 <?php } ?>
             </div>
@@ -60,14 +60,14 @@
             
                 <?php foreach ($mesAnimes as $oeuvre) { ?>
                     <div class="articleImage">
-                        <a href="Details.php?idOeuvre=<?php echo $oeuvre['id_Oeuvre'] ?>">
-                            <?php if (is_null($oeuvre['id_Oeuvre'])) { ?>
+                        <a href="Details.php?idOeuvre=<?php echo $oeuvre->getIdOeuvre() ?>">
+                            <?php if (is_null($oeuvre->getIdOeuvre())) { ?>
                                 <div class="placeholder">Non trouvé</div>
                             <?php } else { ?>
-                                <img class="film-image" src="../img/<?php echo $oeuvre['img_Oeuvre'] ?>.jpg" alt="<?php echo $oeuvre['img_Oeuvre'] ?>">
+                                <img class="film-image" src="../img/<?php echo $oeuvre->getImage() ?>.jpg" alt="<?php echo $oeuvre->getImage() ?>">
                             <?php } ?>
                         </a>
-                        <h4 class="titreOeuvre"><?php echo strlen($oeuvre['tit_ori_Oeuvre']) > 25 ? substr($oeuvre['tit_ori_Oeuvre'], 0, 25) . '...' : $oeuvre['tit_ori_Oeuvre']; ?></h4>
+                        <h4 class="titreOeuvre"><?php echo strlen($oeuvre->getTitreOriginal()) > 25 ? substr($oeuvre->getTitreOriginal(), 0, 25) . '...' : $oeuvre->getTitreOriginal(); ?></h4>
                     </div>
                 <?php } ?>
             </div>

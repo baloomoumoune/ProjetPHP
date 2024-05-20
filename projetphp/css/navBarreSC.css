@@ -1,11 +1,33 @@
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+
 body {
+    background-color: #202020; /* Couleur de fond */
     margin: 0; /* Supprime les marges par défaut du corps de la page */
     padding: 0; /* Supprime les rembourrages par défaut du corps de la page */
     display: flex; /* Utiliser Flexbox pour centrer le cadre */
     justify-content: center; /* Centrer horizontalement */
     align-items: center; /* Centrer verticalement */
-    height: 100vh; /* Hauteur de la vue */
-    background-color: #202020; /* Couleur de fond */
+    color:#fff;
 }
 /* On fait en sorte que chaque élément contienne sa marge interne avec box-sizing et on retire les traits qui sont par défaut sur les liens */
 * {
@@ -21,7 +43,7 @@ border-radius: 40px;
 box-shadow: 0 10px 40px #454545;
 display: flex;
 overflow: hidden;
-overflow-x: auto;
+overflow-x: hidden;
 position: fixed; /* Position fixe pour que la barre reste en haut de la page */
 width: auto; /* Occupera toute la largeur de l'écran */
 top: 0; /* Collé en haut */
@@ -29,6 +51,7 @@ z-index: 999; /* Pour s'assurer que la barre est au-dessus du contenu */
 left: 0; /* Centrage horizontal */
 right: 0; /* Centrage horizontal */
 margin: auto; /* Centrage horizontal */
+margin-top: 20px
 }
 
 
@@ -40,6 +63,14 @@ padding: 20px;
 margin: 0 6px;
 position: relative;
 }
+.nav-item2 {
+    color: #FFF;
+    font-family: arial, sans-serif;
+    padding: 20px;
+    margin: 0 6px;
+    position: relative;
+    margin-left: auto;
+    }
 
 /* Ici on met juste un petit élément avant chaque élément pour le rendre plus beau visuellement */
 .nav-item:before {
@@ -78,4 +109,24 @@ color: #83818c;
 font-family: arial, sans-serif;
 padding: 20px;
 margin-left: auto;
+
 }
+.search {
+    display: flex;
+    align-items: center;
+    padding: 1svh;
+    border-radius: 2svh;
+    margin-left: 90svh;
+    margin-top: 1.8svh;
+    width: 28svh;
+    background-color: #212121;
+  
+  }
+  .search-input{
+    outline: none;
+    border: none;
+    background: transparent;
+    color: rgb(92, 92, 92);
+    width: 25svh;
+    margin-left: 1svh;
+  }

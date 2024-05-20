@@ -19,14 +19,15 @@
   background: #555; 
 }
    body {
+            color:#ffffff;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
             background-color: #202020;
-            
+            font-family: Arial, sans-serif;
+
         }
         
 /* On fait en sorte que chaque élément contienne sa marge interne avec box-sizing et on retire les traits qui sont par défaut sur les liens */
@@ -43,8 +44,6 @@ nav {
   box-shadow: 0 10px 40px #454545;
   display: flex;
   overflow: hidden;
- 
-  
   position: fixed; /* Position fixe pour que la barre reste en haut de la page */
   width: auto; /* Occupera toute la largeur de l'écran */
   top: 0; /* Collé en haut */
@@ -52,6 +51,7 @@ nav {
   left: 0; /* Centrage horizontal */
   right: 0; /* Centrage horizontal */
   margin: auto; /* Centrage horizontal */
+  margin-top: 20px;
 }
 
 
@@ -62,8 +62,8 @@ nav {
   padding: 20px;
   margin: 0 6px;
   position: relative;
+  margin-left: auto;
 }
-
 /* Ici on met juste un petit élément avant chaque élément pour le rendre plus beau visuellement */
 .nav-item:before {
   content: "";
@@ -78,11 +78,9 @@ nav {
 }
 
 /* Avec les dernières nouveautés de CSS, on peut changer les propriétés des éléments selon des conditions avec not */
-.nav-item:not(.is-active):hover:before {
-  bottom: 0;
-}
+
 .nav-item:not(.is-active):hover {
-  color: #333;
+  color: #474747;
 }
 
 /* Stylisons notre indicateur */
@@ -100,6 +98,25 @@ nav {
   color: #83818c;
   font-family: arial, sans-serif;
   padding: 20px;
-  margin-left: auto;
-}
   
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  padding: 1svh;
+  border-radius: 2svh;
+  margin-left: 60svh;
+  margin-top: 1.8svh;
+  width: 28svh;
+  background-color: #212121;
+
+}
+.search-input{
+  outline: none;
+  border: none;
+  background: transparent;
+  color: rgb(92, 92, 92);
+  width: 25svh;
+  margin-left: 1svh;
+}

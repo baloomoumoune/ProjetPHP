@@ -17,9 +17,10 @@
     border: none;
     right: 0;/*supprimable*/
     top:0;/*supprimable*/
-    background: rgb(0, 0, 0);
+    background: #202020;
     border-radius: 20px;
-    color:#5f5f5f;
+    color:#898989;
+
 }
 .container {
     display:flex;
@@ -35,7 +36,7 @@
     flex-direction:row-reverse;
     align-items: center;
     justify-content: flex-start;
-    gap:30px;
+    gap:1svh;
     width: 100%;
 } 
 .articleImage{

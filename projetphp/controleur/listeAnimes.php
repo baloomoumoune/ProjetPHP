@@ -42,5 +42,5 @@ if(isset($_SESSION['login'])&&$_SESSION['login']!='' ){
 else{
     include('../vue/navBarreSC.php');
 }
-include('../vue/gestionOeuvre.php');
+include('../vue/vuelisteAnimes.php');
 include('../vue/basDePage.php');

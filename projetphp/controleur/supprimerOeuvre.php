@@ -34,7 +34,7 @@ $GenreDAO = new \DAO\genreDAO($bdd);
 
 $titre = 'accueil';
 
-$mesAnimes = $OeuvreDAO->getAllAnime();
+$Oeuvres = $OeuvreDAO->getAllOeuvre();
 if(isset($_SESSION['login'])&&$_SESSION['login']!='' ){
 
     include('../vue/navBarre.php');
@@ -42,5 +42,14 @@ if(isset($_SESSION['login'])&&$_SESSION['login']!='' ){
 else{
     include('../vue/navBarreSC.php');
 }
-include('../vue/gestionOeuvre.php');
-include('../vue/basDePage.php');
+
+if(isset($_POST['btnDel'])){
+    $OeuvreDAO->deleteOeuvre($_POST['idOeuvre']);
+    header('Location:ListeOeuvre.php');
+}else {
+    include('../vue/supprimerOeuvre.php');
+    include('../vue/basDePage.php');
+}
+
+
+

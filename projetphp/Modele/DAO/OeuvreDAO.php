@@ -5,6 +5,8 @@ namespace DAO;
 require_once ('ActeurDAO.php');
 require_once ('GenreDAO.php');
 require_once ('RealisateurDAO.php');
+require_once ('ClassificationDAO.php');
+
 use Bo\Oeuvre;
 
 
@@ -123,21 +125,202 @@ class OeuvreDAO {
         return $resultSet;
     }
 
-    public function createOeuvre($tit_ori_Oeuvre, $tit_fr_Oeuvre, $anne_sort_Oeuvre, $res_Oeuvre, $nb_ep_Oeuvre, $img_Oeuvre, $id_Cla) {
-        $sql = "INSERT INTO Oeuvre (tit_ori_Oeuvre, tit_fr_Oeuvre, anne_sort_Oeuvre, res_Oeuvre, nb_ep_Oeuvre, img_Oeuvre, id_Cla) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $bdd->prepare($sql);
-        $stmt->execute([$tit_ori_Oeuvre, $tit_fr_Oeuvre, $anne_sort_Oeuvre, $res_Oeuvre, $nb_ep_Oeuvre, $img_Oeuvre, $id_Cla]);
+    //----------------------------------------------CREATE------------------------------------------------------------
+    public function createOeuvre(Oeuvre $entity): ?Oeuvre {
+        $resultSet = NULL;
+
+        // Insertion de l'oeuvre principale
+        $query = "INSERT INTO Oeuvre (id_Oeuvre, tit_ori_Oeuvre, tit_fr_Oeuvre, anne_sort_Oeuvre, res_Oeuvre, nb_ep_Oeuvre, img_Oeuvre, id_Cla) VALUES (:idOeuvre, :titOri, :titFr, :anneeSort, :resOeuvre, :nbEp, :img, :Cla)";
+        $reqPrep = $this->bdd->prepare($query);
+        $res = $reqPrep->execute([
+            ':idOeuvre' => $entity->getIdOeuvre(),
+            ':titOri' => $entity->getTitreOriginal(),
+            ':titFr' => $entity->getTitreFrancais(),
+            ':anneeSort' => $entity->getAnneeSortie(),
+            ':resOeuvre' => $entity->getResume(),
+            ':nbEp' => $entity->getNombreEpisodes(),
+            ':img' => $entity->getImage(),
+            ':Cla' => $entity->getClassification()->getIdCla()
+        ]);
+
+        if ($res !== FALSE) {
+            $entity->setIdOeuvre($this->bdd->lastInsertId());
+        }
+
+        // Insertion dans la table Jouer pour les acteurs principaux
+        foreach ($entity->getActeurP() as $row) {
+            if ($row !== null) { // Vérifier que $row n'est pas null
+                $query = "INSERT INTO Jouer (id_Act, id_Oeuvre, prem_role) VALUES (:idAct, :idOeuvre, 1)";
+                $reqPrep = $this->bdd->prepare($query);
+                $reqPrep->execute([
+                    ':idAct' => $row->getIdAct(),
+                    ':idOeuvre' => $entity->getIdOeuvre()
+                ]);
+            }
+        }
+
+        // Insertion dans la table Jouer pour les acteurs secondaires
+        foreach ($entity->getActeurs() as $row) {
+            if ($row !== null) { // Vérifier que $row n'est pas null
+                $query = "INSERT INTO Jouer (id_Act, id_Oeuvre, prem_role) VALUES (:idAct, :idOeuvre, 0)";
+                $reqPrep = $this->bdd->prepare($query);
+                $reqPrep->execute([
+                    ':idAct' => $row->getIdAct(),
+                    ':idOeuvre' => $entity->getIdOeuvre()
+                ]);
+            }
+        }
+
+        // Insertion dans la table Realiser
+        foreach ($entity->getMesrealisateurs() as $row) {
+            if ($row !== null) { // Vérifier que $row n'est pas null
+                $query = "INSERT INTO Realiser (id_Oeuvre, id_Real) VALUES (:idOeuvre, :idReal)";
+                $reqPrep = $this->bdd->prepare($query);
+                $reqPrep->execute([
+                    ':idOeuvre' => $entity->getIdOeuvre(),
+                    ':idReal' => $row->getIdReal()
+                ]);
+            }
+        }
+
+        // Insertion dans la table Appartenir
+        foreach ($entity->getMesgenres() as $row) {
+            if ($row !== null) { // Vérifier que $row n'est pas null
+                $query = "INSERT INTO Appartenir (id_Oeuvre, id_Gen) VALUES (:idOeuvre, :idGen)";
+                $reqPrep = $this->bdd->prepare($query);
+                $reqPrep->execute([
+                    ':idOeuvre' => $entity->getIdOeuvre(),
+                    ':idGen' => $row->getIdGen()
+                ]);
+            }
+        }
+
+        $resultSet = $entity;
+
+        return $resultSet;
     }
 
-    public function updateOeuvre($id_Oeuvre, $tit_ori_Oeuvre, $tit_fr_Oeuvre, $anne_sort_Oeuvre, $res_Oeuvre, $nb_ep_Oeuvre, $img_Oeuvre, $id_Cla) {
-        $sql = "UPDATE Oeuvre SET tit_ori_Oeuvre=?, tit_fr_Oeuvre=?, anne_sort_Oeuvre=?, res_Oeuvre=?, nb_ep_Oeuvre=?, img_Oeuvre=?, id_Cla=? WHERE id_Oeuvre=?";
-        $stmt = $bdd->prepare($sql);
-        $stmt->execute([$tit_ori_Oeuvre, $tit_fr_Oeuvre, $anne_sort_Oeuvre, $res_Oeuvre, $nb_ep_Oeuvre, $img_Oeuvre, $id_Cla, $id_Oeuvre]);
+
+
+    //----------------------------------------------------UPDATE--------------------------------------------
+    public function updateOeuvre(Oeuvre $entity) {
+        $resultSet = false;
+        if ($entity->getIdOeuvre() !== null && $this->findOeuvre($entity->getIdOeuvre()) !== null) {
+            $query = "UPDATE Oeuvre SET tit_ori_Oeuvre = :titOri, tit_fr_Oeuvre = :titFr, anne_sort_Oeuvre = :anneeSort, res_Oeuvre = :res, nb_ep_Oeuvre = :nbEp, img_Oeuvre=:img, id_Cla=:idCla WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $res = $reqPrep->execute([
+                ':titOri' => $entity->getTitreOriginal(),
+                ':titFr'=> $entity->getTitreFrancais(),
+                ':anneeSort' => $entity->getAnneeSortie(),
+                ':res'=> $entity->getResume(),
+                ':nbEp' => $entity->getNombreEpisodes(),
+                ':img'=> $entity->getImage(),
+                ':idCla'=> $entity->getClassification()->getIdCla(),
+                ':idOeuvre'=> $entity->getIdOeuvre()
+            ]);
+
+            //-----------------------JOUER-----------------------------
+            // Supprime les anciennes associations
+            $query = "DELETE FROM Jouer WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $reqPrep->execute([':idOeuvre' => $entity->getIdOeuvre()]);
+
+            // Insère les nouvelles associations
+            foreach ($entity->getActeurP() as $row){
+                if ($row !== null) { // Vérifie que $row n'est pas null
+                    $query = "INSERT INTO Jouer (id_Act, id_Oeuvre, prem_role) VALUES (:idAct, :idOeuvre, 1)";
+                    $reqPrep = $this->bdd->prepare($query);
+                    $reqPrep->execute([
+                        ':idAct' => $row->getIdAct(),
+                        ':idOeuvre' => $entity->getIdOeuvre()
+                    ]);
+                }
+            }
+
+            foreach ($entity->getActeurs() as $row){
+                if ($row !== null) { // Vérifie que $row n'est pas null
+                    $query = "INSERT INTO Jouer (id_Act, id_Oeuvre, prem_role) VALUES (:idAct, :idOeuvre, 0)";
+                    $reqPrep = $this->bdd->prepare($query);
+                    $reqPrep->execute([
+                        ':idAct' => $row->getIdAct(),
+                        ':idOeuvre' => $entity->getIdOeuvre()
+                    ]);
+                }
+            }
+
+            //--------------------------Genre------------------
+            // Supprime les anciennes associations
+            $query = "DELETE FROM Appartenir WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $reqPrep->execute([':idOeuvre' => $entity->getIdOeuvre()]);
+
+            // Insère les nouvelles associations
+            foreach ($entity->getMesgenres() as $row){
+                if ($row !== null) { // Vérifie que $row n'est pas null
+                    $query = "INSERT INTO Appartenir (id_Oeuvre, id_Gen) VALUES (:idOeuvre, :idGen)";
+                    $reqPrep = $this->bdd->prepare($query);
+                    $reqPrep->execute([
+                        ':idOeuvre' => $entity->getIdOeuvre(),
+                        ':idGen' => $row->getIdGen()
+                    ]);
+                }
+            }
+
+            //--------------------------Realisateurs------------------------------
+            // Supprime les anciennes associations
+            $query = "DELETE FROM Realiser WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $reqPrep->execute([':idOeuvre' => $entity->getIdOeuvre()]);
+
+            // Insère les nouvelles associations
+            foreach ($entity->getMesrealisateurs() as $row){
+                if ($row !== null) { // Vérifie que $row n'est pas null
+                    $query = "INSERT INTO Realiser (id_Oeuvre, id_Real) VALUES (:idOeuvre, :idReal)";
+                    $reqPrep = $this->bdd->prepare($query);
+                    $reqPrep->execute([
+                        ':idOeuvre' => $entity->getIdOeuvre(),
+                        ':idReal' => $row->getIdReal()
+                    ]);
+                }
+            }
+
+            $resultSet = $entity;
+        }
+        return $resultSet;
     }
 
-    public function deleteOeuvre($id_Oeuvre) {
-        $sql = "DELETE FROM Oeuvre WHERE id_Oeuvre=?";
-        $stmt = $bdd->prepare($sql);
-        $stmt->execute([$id_Oeuvre]);
+
+
+//-------------------------------------------------DELETE----------------------------------------------------
+
+    public function deleteOeuvre($idOeuvre) {
+        $resultSet = false;
+
+        if ($this->findOeuvre($idOeuvre) !== null) {
+            // Supprimer les associations dans les tables Jouer, Realiser et Appartenir
+            $query = "DELETE FROM Jouer WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $reqPrep->execute([':idOeuvre' => $idOeuvre]);
+
+            $query = "DELETE FROM Realiser WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $reqPrep->execute([':idOeuvre' => $idOeuvre]);
+
+            $query = "DELETE FROM Appartenir WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $reqPrep->execute([':idOeuvre' => $idOeuvre]);
+
+            // Supprimer l'oeuvre principale de la table Oeuvre
+            $query = "DELETE FROM Oeuvre WHERE id_Oeuvre = :idOeuvre";
+            $reqPrep = $this->bdd->prepare($query);
+            $res = $reqPrep->execute([':idOeuvre' => $idOeuvre]);
+
+            if ($res) {
+                $resultSet = true;
+            }
+        }
+
+        return $resultSet;
     }
+
 }
